@@ -10,5 +10,4 @@ const Quiz = db.define('quiz', {
     defaultValue: uuidV4(),
   }
 });
-
 module.exports = Quiz;

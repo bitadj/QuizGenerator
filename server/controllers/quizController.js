@@ -3,6 +3,10 @@ const router = express.Router();
 const db = require('../models/db');
 const Models = require('../models');
 
+function loopArr(arr) {
+  // loop over this array
+}
+
 // get all quizzes
 function findAll(req, res, next) {
   Models.Quiz.findAll({}).then((quizzes) => {
@@ -22,9 +26,41 @@ function addOne(req, res, next) {
   Models.Quiz
     .create(quizToAdd)
     .then((quiz) => {
+      // quizid: quiz.id
+      // console.log('quiz is', quiz);
+      // console.log('what the fuck is quiz', quiz.id)
+      // console.log('questions', req.body.questions)
+      // console.log('answers', req.body.answers)
+
       // also create answers
       // only need to send back quiz info - then update state
-      res.status(200).send(quiz);
+      // res.status(200).send(quiz);
+      const questionToAdd = {
+        question: JSON.stringify(req.body.questions),
+        quizId: quiz.id,
+        // answers: req.body.answers[0]
+      };
+
+      Models.Question.create(questionToAdd)
+        .then((question) => {
+          console.log('answer in QTA ', req.body.answers);
+
+          const answersToAdd = {
+            answer: JSON.stringify(req.body.answers),
+            // answer: "django",
+            questionId: question.id,
+          };
+
+          Models.Answer.create(answersToAdd).then((answers) => {
+            console.log('answers in ATA ', req.body.answers);
+                  res.status(200).send(quiz);
+          })
+        })
+      // console.log(Models.Question.create(questionToAdd).then((question) =>{
+      //   console.log(question)
+      // }));
+
+      // Models.Question.create(questionToAdd);
     })
     .catch((err) => {
       next(err);

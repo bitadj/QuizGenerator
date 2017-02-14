@@ -97,10 +97,7 @@ class App extends Component {
   }
 
   createQuiz(e, localState) {
-    console.log(localState);
-    let questions = [];
-    let answers = [];
-
+    // console.log(localState);
     let data = {
       method: 'POST',
       credentials: 'same-origin',
@@ -109,6 +106,7 @@ class App extends Component {
         name: localState.quizTitle,
         description: localState.quizDesc,
         questions: localState.questions,
+        answers: localState.answers,
       }),
       headers: {
         'Accept': 'application/json',

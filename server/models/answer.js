@@ -4,10 +4,6 @@ const db = require('./db');
 const Answer = db.define('answer', {
   answer: {
     type: Sequelize.STRING,
-  },
-  description: {
-    type: Sequelize.STRING,
-  },
+  }
 });
-
 module.exports = Answer;
